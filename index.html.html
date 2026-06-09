@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI × 牛仔裤 西部性格图鉴</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Special+Elite&family=Noto+Serif+SC:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #1a0e00;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(139, 90, 43, 0.08) 40px,
+                    rgba(139, 90, 43, 0.08) 41px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(139, 90, 43, 0.08) 40px,
+                    rgba(139, 90, 43, 0.08) 41px
+                );
+            font-family: 'Noto Serif SC', serif;
+            color: #f5e6c8;
+            min-height: 100vh;
+        }
+
+        /* 顶部横幅 */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(139, 90, 43, 0.3) 0%, transparent 70%);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            border: 3px solid #c9933a;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            line-height: 114px;
+            font-size: 60px;
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(201, 147, 58, 0.4), inset 0 0 20px rgba(201, 147, 58, 0.1);
+        }
+
+        .hero h1 {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(28px, 5vw, 56px);
+            color: #c9933a;
+            text-shadow: 3px 3px 0px #5a3a00, 0 0 40px rgba(201, 147, 58, 0.5);
+            letter-spacing: 4px;
+            position: relative;
+        }
+
+        .hero-sub {
+            font-size: clamp(12px, 2vw, 16px);
+            color: #a07840;
+            letter-spacing: 8px;
+            margin-top: 12px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 40px;
+            justify-content: center;
+        }
+
+        .divider-line {
+            flex: 1;
+            max-width: 300px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #c9933a, transparent);
+        }
+
+        .divider-icon {
+            color: #c9933a;
+            font-size: 20px;
+        }
+
+        /* 分组标题 */
+        .group-header {
+            text-align: center;
+            margin: 50px 20px 30px;
+            position: relative;
+        }
+
+        .group-title {
+            display: inline-block;
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(18px, 3vw, 28px);
+            padding: 12px 40px;
+            border: 2px solid currentColor;
+            position: relative;
+            letter-spacing: 3px;
+        }
+
+        .group-title::before,
+        .group-title::after {
+            content: '✦';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+        }
+
+        .group-title::before { left: 15px; }
+        .group-title::after { right: 15px; }
+
+        .group-nt .group-title { color: #7b9fc7; border-color: #7b9fc7; text-shadow: 0 0 20px rgba(123, 159, 199, 0.5); }
+        .group-nf .group-title { color: #9b7bc7; border-color: #9b7bc7; text-shadow: 0 0 20px rgba(155, 123, 199, 0.5); }
+        .group-sj .group-title { color: #c9933a; border-color: #c9933a; text-shadow: 0 0 20px rgba(201, 147, 58, 0.5); }
+        .group-sp .group-title { color: #7bc79b; border-color: #7bc79b; text-shadow: 0 0 20px rgba(123, 199, 155, 0.5); }
+
+        /* 卡片网格 */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 10px 40px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 单张卡片 */
+        .card {
+            border: 1px solid rgba(201, 147, 58, 0.3);
+            border-radius: 4px;
+            padding: 30px 25px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        /* NT 组 - 深蓝钢铁 */
+        .card-nt {
+            background: linear-gradient(145deg, #0d1a2b 0%, #152236 50%, #0d1a2b 100%);
+            border-color: rgba(123, 159, 199, 0.3);
+        }
+        .card-nt::before { background: linear-gradient(90deg, transparent, #7b9fc7, transparent); }
+        .card-nt .accent { color: #7b9fc7; }
+        .card-nt .card-bg-text { color: rgba(123, 159, 199, 0.04); }
+
+        /* NF 组 - 靛紫神秘 */
+        .card-nf {
+            background: linear-gradient(145deg, #1a0d2b 0%, #241536 50%, #1a0d2b 100%);
+            border-color: rgba(155, 123, 199, 0.3);
+        }
+        .card-nf::before { background: linear-gradient(90deg, transparent, #9b7bc7, transparent); }
+        .card-nf .accent { color: #9b7bc7; }
+        .card-nf .card-bg-text { color: rgba(155, 123, 199, 0.04); }
+
+        /* SJ 组 - 棕金经典 */
+        .card-sj {
+            background: linear-gradient(145deg, #1f1000 0%, #2e1a00 50%, #1f1000 100%);
+            border-color: rgba(201, 147, 58, 0.3);
+        }
+        .card-sj::before { background: linear-gradient(90deg, transparent, #c9933a, transparent); }
+        .card-sj .accent { color: #c9933a; }
+        .card-sj .card-bg-text { color: rgba(201, 147, 58, 0.04); }
+
+        /* SP 组 - 草绿荒野 */
+        .card-sp {
+            background: linear-gradient(145deg, #0d1f14 0%, #152e1e 50%, #0d1f14 100%);
+            border-color: rgba(123, 199, 155, 0.3);
+        }
+        .card-sp::before { background: linear-gradient(90deg, transparent, #7bc79b, transparent); }
+        .card-sp .accent { color: #7bc79b; }
+        .card-sp .card-bg-text { color: rgba(123, 199, 155, 0.04); }
+
+        /* 卡片背景大字 */
+        .card-bg-text {
+            position: absolute;
+            bottom: -10px;
+            right: -5px;
+            font-family: 'Special Elite', cursive;
+            font-size: 80px;
+            font-weight: 900;
+            pointer-events: none;
+            line-height: 1;
+        }
+
+        /* 卡片顶部 */
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .mbti-code {
+            font-family: 'Special Elite', cursive;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .mbti-code.accent { }
+
+        .card-icon {
+            font-size: 36px;
+            opacity: 0.8;
+        }
+
+        /* 卡片主体 */
+        .card-name {
+            font-size: clamp(18px, 2.5vw, 24px);
+            font-weight: 700;
+            color: #f5e6c8;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .card-tagline {
+            font-size: 12px;
+            letter-spacing: 3px;
+            opacity: 0.6;
+            margin-bottom: 18px;
+            font-style: italic;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            line-height: 1.9;
+            color: #d4c4a0;
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 15px;
+            border-left: 2px solid rgba(255,255,255,0.1);
+        }
+
+        /* 丹宁档案 */
+        .denim-file {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 3px;
+            padding: 14px 16px;
+            position: relative;
+        }
+
+        .denim-file-title {
+            font-family: 'Special Elite', cursive;
+            font-size: 10px;
+            letter-spacing: 4px;
+            opacity: 0.5;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .denim-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .denim-tag {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 2px;
+            border: 1px solid currentColor;
+            opacity: 0.8;
+        }
+
+        .denim-quote {
+            font-size: 11px;
+            font-style: italic;
+            opacity: 0.5;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        /* 底部 */
+        .footer {
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        .footer-brand {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(20px, 4vw, 36px);
+            color: #c9933a;
+            letter-spacing: 8px;
+            text-shadow: 0 0 30px rgba(201, 147, 58, 0.5);
+            margin-bottom: 15px;
+        }
+
+        .footer-sub {
+            font-size: 13px;
+            color: #a07840;
+            letter-spacing: 4px;
+            opacity: 0.7;
+        }
+
+        .footer-stars {
+            font-size: 24px;
+            margin: 20px 0;
+            letter-spacing: 10px;
+        }
+
+        /* 牛仔裤装饰线 */
+        .stitch-line {
+            border: none;
+            border-top: 2px dashed rgba(201, 147, 58, 0.2);
+            margin: 0 40px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .cards-grid {
+                padding: 10px 16px 30px;
+                gap: 16px;
+            }
+            .stitch-line { margin: 0 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部英雄区 -->
+    <div class="hero">
+        <div class="hero-badge">🤠</div>
+        <h1>MBTI × DENIM</h1>
+        <p class="hero-sub">西部性格图鉴 · Denim Wild West</p>
+    </div>
+
+    <div class="divider">
+        <div class="divider-line"></div>
+        <span class="divider-icon">✦ ✦ ✦</span>
+        <div class="divider-line"></div>
+    </div>
+
+    <!-- NT 分析师组 -->
+    <div class="group-header group-nt">
+        <div class="group-title">分析师 · ANALYST · NT</div>
+    </div>
+
+    <div class="cards-grid">
+
+        <div class="card card-nt">
+            <div class="card-bg-text card-bg-text">INTJ</div>
+            <div class="card-top">
+                <span class="mbti-code accent">INTJ</span>
+                <span class="card-icon">🌑</span>
+            </div>
+            <div class="card-name">黑夜牧场主</div>
+            <div class="card-tagline">"版型即战略"</div>
+            <div class="card-desc">
+                在荒野中独自规划牧场边界的人<br>
+                修身剪裁，拒绝多余褶皱<br>
+                每一条缝线都是深思熟虑的决策<br>
+                穿上它，你就是自己帝国的设计师
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">靛黑重磅</span>
+                    <span class="denim-tag accent">修身直筒</span>
+                    <span class="denim-tag accent">零装饰主义</span>
+                </div>
+                <div class="denim-quote">这条裤子知道自己想去哪里</div>
+            </div>
+        </div>
+
+        <div class="card card-nt">
+            <div class="card-bg-text">INTP</div>
+            <div class="card-top">
+                <span class="mbti-code accent">INTP</span>
+                <span class="card-icon">🔭</span>
+            </div>
+            <div class="card-name">荒野制图人</div>
+            <div class="card-tagline">"面料是待解的方程"</div>
+            <div class="card-desc">
+                在篝火旁拆解牛仔布结构的探索者<br>
+                研究每一根纱线背后的逻辑<br>
+                忘记穿什么，却永远记得为什么这样织
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">原色实验布</span>
+                    <span class="denim-tag accent">宽松版型</span>
+                    <span class="denim-tag accent">隐藏口袋</span>
+                </div>
+                <div class="denim-quote">穿的人自己都没发现所有的设计巧思</div>
+            </div>
+        </div>
+
+        <div class="card card-nt">
+            <div class="card-bg-text">ENTJ</div>
+            <div class="card-top">
+                <span class="mbti-code accent">ENTJ</span>
+                <span class="card-icon">🚂</span>
+            </div>
+            <div class="card-name">铁路开拓者</div>
+            <div class="card-tagline">"我的版型，我的规则"</div>
+            <div class="card-desc">
+                带领马队穿越峡谷的先锋队长<br>
+                硬挺笔直如铁轨延伸向远方<br>
+                没有人质疑这条裤子的权威
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">重磅硬挺</span>
+                    <span class="denim-tag accent">标准直筒</span>
+                    <span class="denim-tag accent">铜扣强化</span>
+                </div>
+                <div class="denim-quote">穿上它，会议室就是你的西部小镇</div>
+            </div>
+        </div>
+
+        <div class="card card-nt">
+            <div class="card-bg-text">ENTP</div>
+            <div class="card-top">
+                <span class="mbti-code accent">ENTP</span>
+                <span class="card-icon">🎯</span>
+            </div>
+            <div class="card-name">酒馆挑衅者</div>
+            <div class="card-tagline">"规则？我以为那是建议"</div>
+            <div class="card-desc">
+                在西部酒馆里和所有人辩论裤型的家伙<br>
+                今天拆掉口袋明天加回来<br>
+                把别人的确定性当成射击靶
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">混纺解构</span>
+                    <span class="denim-tag accent">不对称剪裁</span>
+                    <span class="denim-tag accent">可拆卸细节</span>
+                </div>
+                <div class="denim-quote">每次穿都能找到新的穿法</div>
+            </div>
+        </div>
+
+    </div>
+
+    <hr class="stitch-line">
+
+    <!-- NF 外交官组 -->
+    <div class="group-header group-nf">
+        <div class="group-title">外交官 · DIPLOMAT · NF</div>
+    </div>
+
+    <div class="cards-grid">
+
+        <div class="card card-nf">
+            <div class="card-bg-text">INFJ</div>
+            <div class="card-top">
+                <span class="mbti-code accent">INFJ</span>
+                <span class="card-icon">🌙</span>
+            </div>
+            <div class="card-name">靛蓝预言者</div>
+            <div class="card-tagline">"每一次染色都是一次使命"</div>
+            <div class="card-desc">
+                守护古老染缸秘方的隐士裁缝<br>
+                在月光下完成最后一道车线<br>
+                相信每条牛仔裤都有它的天命之人
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">古法靛染</span>
+                    <span class="denim-tag accent">窄脚收腿</span>
+                    <span class="denim-tag accent">内藏刺绣</span>
+                </div>
+                <div class="denim-quote">外表克制，内里另有乾坤</div>
+            </div>
+        </div>
+
+        <div class="card card-nf">
+            <div class="card-bg-text">INFP</div>
+            <div class="card-top">
+                <span class="mbti-code accent">INFP</span>
+                <span class="card-icon">🌾</span>
+            </div>
+            <div class="card-name">流浪诗人裤</div>
+            <div class="card-tagline">"每道磨白都是一首诗"</div>
+            <div class="card-desc">
+                骑着马写日记的孤独旅人<br>
+                把褪色当成情感的年轮<br>
+                拒绝任何两条一模一样的存在
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">手工做旧</span>
+                    <span class="denim-tag accent">自由版型</span>
+                    <span class="denim-tag accent">随机磨白</span>
+                </div>
+                <div class="denim-quote">世界上找不到第二条完全相同的</div>
+            </div>
+        </div>
+
+        <div class="card card-nf">
+            <div class="card-bg-text">ENFJ</div>
+            <div class="card-top">
+                <span class="mbti-code accent">ENFJ</span>
+                <span class="card-icon">🌅</span>
+            </div>
+            <div class="card-name">驿站守护人</div>
+            <div class="card-tagline">"每个身形都值得被好好包容"</div>
+            <div class="card-desc">
+                西部小镇里所有人都信任的那个人<br>
+                宽松剪裁接纳一切<br>
+                穿上它你会想对陌生人微笑
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">弹力包容布</span>
+                    <span class="denim-tag accent">宽松直筒</span>
+                    <span class="denim-tag accent">温暖水洗</span>
+                </div>
+                <div class="denim-quote">像一个拥抱</div>
+            </div>
+        </div>
+
+        <div class="card card-nf">
+            <div class="card-bg-text">ENFP</div>
+            <div class="card-top">
+                <span class="mbti-code accent">ENFP</span>
+                <span class="card-icon">🔥</span>
+            </div>
+            <div class="card-name">篝火舞者</div>
+            <div class="card-tagline">"今晚的星星和昨晚不一样"</div>
+            <div class="card-desc">
+                第一个跳上桌子跳舞的人<br>
+                口袋里永远装着意外的小东西<br>
+                拼色、刺绣、流苏一个都不想放弃
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">拼布撞色</span>
+                    <span class="denim-tag accent">微喇版型</span>
+                    <span class="denim-tag accent">手工流苏</span>
+                </div>
+                <div class="denim-quote">穿上它会自动想要旋转</div>
+            </div>
+        </div>
+
+    </div>
+
+    <hr class="stitch-line">
+
+    <!-- SJ 守护者组 -->
+    <div class="group-header group-sj">
+        <div class="group-title">守护者 · SENTINEL · SJ</div>
+    </div>
+
+    <div class="cards-grid">
+
+        <div class="card card-sj">
+            <div class="card-bg-text">ISTJ</div>
+            <div class="card-top">
+                <span class="mbti-code accent">ISTJ</span>
+                <span class="card-icon">📋</span>
+            </div>
+            <div class="card-name">牧场账本员</div>
+            <div class="card-tagline">"经典款从不需要解释"</div>
+            <div class="card-desc">
+                二十年如一日穿同款的可靠之人<br>
+                从不追赶潮流，因为潮流终将回头来追他<br>
+                磨损的是裤子，不变的是品格
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">原色重磅</span>
+                    <span class="denim-tag accent">经典直筒</span>
+                    <span class="denim-tag accent">加固双针</span>
+                </div>
+                <div class="denim-quote">第一次穿和第十年穿都正确</div>
+            </div>
+        </div>
+
+        <div class="card card-sj">
+            <div class="card-bg-text">ISFJ</div>
+            <div class="card-top">
+                <span class="mbti-code accent">ISFJ</span>
+                <span class="card-icon">🌿</span>
+            </div>
+            <div class="card-name">养牛守边人</div>
+            <div class="card-tagline">"时间会替我说话"</div>
+            <div class="card-desc">
+                每天穿着同一条裤子照料牧场的人<br>
+                膝盖的磨白是蹲下照顾他人留下的痕迹<br>
+                口袋里总有给别人备着的东西
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">柔软水洗</span>
+                    <span class="denim-tag accent">舒适直筒</span>
+                    <span class="denim-tag accent">自然养成</span>
+                </div>
+                <div class="denim-quote">穿得越久越懂它的好</div>
+            </div>
+        </div>
+
+        <div class="card card-sj">
+            <div class="card-bg-text">ESTJ</div>
+            <div class="card-top">
+                <span class="mbti-code accent">ESTJ</span>
+                <span class="card-icon">🔔</span>
+            </div>
+            <div class="card-name">镇长工装裤</div>
+            <div class="card-tagline">"秩序是最好的剪裁"</div>
+            <div class="card-desc">
+                敲响集会钟声的西部镇长<br>
+                多口袋设计对应每一项职责<br>
+                没有多余装饰，因为每一处都有用处
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">工装加厚</span>
+                    <span class="denim-tag accent">多口袋版</span>
+                    <span class="denim-tag accent">耐磨强化</span>
+                </div>
+                <div class="denim-quote">这条裤子管理着整个牧场</div>
+            </div>
+        </div>
+
+        <div class="card card-sj">
+            <div class="card-bg-text">ESFJ</div>
+            <div class="card-top">
+                <span class="mbti-code accent">ESFJ</span>
+                <span class="card-icon">🛖</span>
+            </div>
+            <div class="card-name">集市热心肠</div>
+            <div class="card-tagline">"人人都该有一条合适的裤子"</div>
+            <div class="card-desc">
+                西部集市里帮所有人找到合适尺码的人<br>
+                最了解大家的需求<br>
+                穿上它你会不由自主地想帮忙
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">亲肤弹力</span>
+                    <span class="denim-tag accent">百搭中腰</span>
+                    <span class="denim-tag accent">友好水洗</span>
+                </div>
+                <div class="denim-quote">镇上卖得最好的那条</div>
+            </div>
+        </div>
+
+    </div>
+
+    <hr class="stitch-line">
+
+    <!-- SP 探险家组 -->
+    <div class="group-header group-sp">
+        <div class="group-title">探险家 · EXPLORER · SP</div>
+    </div>
+
+    <div class="cards-grid">
+
+        <div class="card card-sp">
+            <div class="card-bg-text">ISTP</div>
+            <div class="card-top">
+                <span class="mbti-code accent">ISTP</span>
+                <span class="card-icon">🔧</span>
+            </div>
+            <div class="card-name">机车修理工</div>
+            <div class="card-tagline">"磨损是实力的证明"</div>
+            <div class="card-desc">
+                不说话但手里永远在拆些什么的人<br>
+                膝盖破洞是真实用出来的，不是买来的<br>
+                知道每一根铆钉在哪里以及为什么在那里
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">硬挺机车布</span>
+                    <span class="denim-tag accent">锥形窄腿</span>
+                    <span class="denim-tag accent">真实磨损</span>
+                </div>
+                <div class="denim-quote">假装随意，实则精通每个细节</div>
+            </div>
+        </div>
+
+        <div class="card card-sp">
+            <div class="card-bg-text">ISFP</div>
+            <div class="card-top">
+                <span class="mbti-code accent">ISFP</span>
+                <span class="card-icon">🌊</span>
+            </div>
+            <div class="card-name">峡谷漂色师</div>
+            <div class="card-tagline">"美不需要理由"</div>
+            <div class="card-desc">
+                把牛仔裤扔进溪流看它自己决定怎么褪色<br>
+                拒绝解释自己的审美<br>
+                用直觉穿衣，结果总让人惊叹
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">自然扎染</span>
+                    <span class="denim-tag accent">宽松随性</span>
+                    <span class="denim-tag accent">不规则渐变</span>
+                </div>
+                <div class="denim-quote">每一条都是独一无二的风景</div>
+            </div>
+        </div>
+
+        <div class="card card-sp">
+            <div class="card-bg-text">ESTP</div>
+            <div class="card-top">
+                <span class="mbti-code accent">ESTP</span>
+                <span class="card-icon">🐎</span>
+            </div>
+            <div class="card-name">竞技场骑手</div>
+            <div class="card-tagline">"先上马再想方向"</div>
+            <div class="card-desc">
+                第一个冲出牛仔竞技场大门的人<br>
+                需要裤子跟上身体，不是身体等裤子<br>
+                在行动中检验一切
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">高弹机能</span>
+                    <span class="denim-tag accent">修身运动版</span>
+                    <span class="denim-tag accent">强化内裆</span>
+                </div>
+                <div class="denim-quote">为移动而生</div>
+            </div>
+        </div>
+
+        <div class="card card-sp">
+            <div class="card-bg-text">ESFP</div>
+            <div class="card-top">
+                <span class="mbti-code accent">ESFP</span>
+                <span class="card-icon">⭐</span>
+            </div>
+            <div class="card-name">西部秀场王</div>
+            <div class="card-tagline">"所有人都在看，让他们看个够"</div>
+            <div class="card-desc">
+                走进酒馆全场安静的那个人<br>
+                铆钉、刺绣、流苏缺一不可<br>
+                牛仔裤也可以是今晚的主角
+            </div>
+            <div class="denim-file">
+                <div class="denim-file-title">▸ Denim File</div>
+                <div class="denim-tags">
+                    <span class="denim-tag accent">浅色亮泽</span>
+                    <span class="denim-tag accent">喇叭阔腿</span>
+                    <span class="denim-tag accent">铆钉刺绣</span>
+                </div>
+                <div class="denim-quote">穿上它，尘土飞扬也是舞台</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 底部 -->
+    <div class="divider" style="margin-top: 40px;">
+        <div class="divider-line"></div>
+        <span class="divider-icon">✦ ✦ ✦</span>
+        <div class="divider-line"></div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-stars">✦ ✦ ✦</div>
+        <div class="footer-brand">DENIM WILD WEST</div>
+        <div class="footer-sub">十六种丹宁灵魂 · 在西部荒野找到属于你的那条裤子</div>
+        <div class="footer-stars" style="margin-top: 30px; opacity: 0.3;">— ✦ —</div>
+    </div>
+
+</body>
+</html>
